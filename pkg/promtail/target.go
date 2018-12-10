@@ -63,7 +63,7 @@ func NewTarget(logger log.Logger, handler EntryHandler, path string, labels mode
 		logger:  logger,
 		tailer:  tailer,
 		path:    path,
-		handler: handler,
+		handler: addLabelsMiddleware(labels).Wrap(handler),
 		quit:    make(chan struct{}),
 		lines:   linesCh,
 	}
