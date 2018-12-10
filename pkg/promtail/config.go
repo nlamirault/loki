@@ -15,17 +15,15 @@ import (
 
 // Config for promtail, describing what files to watch.
 type Config struct {
-	ServerConfig    server.Config   `yaml:"server,omitempty"`
-	ClientConfig    ClientConfig    `yaml:"client,omitempty"`
-	PositionsConfig PositionsConfig `yaml:"positions,omitempty"`
-	ScrapeConfig    []ScrapeConfig  `yaml:"scrape_configs,omitempty"`
+	ServerConfig server.Config  `yaml:"server,omitempty"`
+	ClientConfig ClientConfig   `yaml:"client,omitempty"`
+	ScrapeConfig []ScrapeConfig `yaml:"scrape_configs,omitempty"`
 }
 
 // RegisterFlags registers flags.
 func (c *Config) RegisterFlags(f *flag.FlagSet) {
 	c.ServerConfig.RegisterFlags(f)
 	c.ClientConfig.RegisterFlags(f)
-	c.PositionsConfig.RegisterFlags(f)
 }
 
 // LoadConfig loads config from a file.

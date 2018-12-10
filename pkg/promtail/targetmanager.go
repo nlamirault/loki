@@ -33,7 +33,6 @@ type TargetManager struct {
 // NewTargetManager creates a new TargetManager.
 func NewTargetManager(
 	logger log.Logger,
-	positions *Positions,
 	client *Client,
 	scrapeConfig []ScrapeConfig,
 ) (*TargetManager, error) {
@@ -55,7 +54,6 @@ func NewTargetManager(
 	for _, cfg := range scrapeConfig {
 		s := &syncer{
 			log:           logger,
-			positions:     positions,
 			relabelConfig: cfg.RelabelConfigs,
 			targets:       map[string]*Target{},
 			hostname:      hostname,
@@ -90,7 +88,6 @@ func (tm *TargetManager) Stop() {
 
 type syncer struct {
 	log          log.Logger
-	positions    *Positions
 	entryHandler EntryHandler
 	hostname     string
 
@@ -160,7 +157,7 @@ func (s *syncer) Sync(groups []*targetgroup.Group) {
 }
 
 func (s *syncer) newTarget(path string, labels model.LabelSet) (*Target, error) {
-	return NewTarget(s.log, s.entryHandler, s.positions, path, labels)
+	return NewTarget(s.log, s.entryHandler, path, labels)
 }
 
 func (s *syncer) stop() {

@@ -43,10 +43,10 @@ type Target struct {
 }
 
 // NewTarget create a new Target.
-func NewTarget(logger log.Logger, handler EntryHandler, positions *Positions, path string, labels model.LabelSet) (*Target, error) {
+func NewTarget(logger log.Logger, handler EntryHandler, path string, labels model.LabelSet) (*Target, error) {
 	watcher, err := watcher.NewLogWatcher()
 	if err != nil {
-		return nil, errors.Wrap(err, "fsnotify.NewWatcher")
+		return nil, errors.Wrap(err, "mtail.NewLogWatcher")
 	}
 
 	linesCh := make(chan *logline.LogLine)

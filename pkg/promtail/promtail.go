@@ -8,7 +8,6 @@ import (
 // Promtail is the root struct for Promtail...
 type Promtail struct {
 	client        *Client
-	positions     *Positions
 	targetManager *TargetManager
 	server        *server.Server
 }
@@ -16,17 +15,12 @@ type Promtail struct {
 // New makes a new Promtail.
 func New(cfg Config) (*Promtail, error) {
 
-	positions, err := NewPositions(util.Logger, cfg.PositionsConfig)
-	if err != nil {
-		return nil, err
-	}
-
 	client, err := NewClient(cfg.ClientConfig, util.Logger)
 	if err != nil {
 		return nil, err
 	}
 
-	tm, err := NewTargetManager(util.Logger, positions, client, cfg.ScrapeConfig)
+	tm, err := NewTargetManager(util.Logger, client, cfg.ScrapeConfig)
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +32,6 @@ func New(cfg Config) (*Promtail, error) {
 
 	return &Promtail{
 		client:        client,
-		positions:     positions,
 		targetManager: tm,
 		server:        server,
 	}, nil

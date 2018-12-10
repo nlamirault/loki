@@ -2,9 +2,6 @@ server:
   http_listen_port: 0
   grpc_listen_port: 0
 
-positions:
-  filename: /tmp/positions.yaml
-
 client:
   url: http://localhost:3100/api/prom/push
 
